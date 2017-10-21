@@ -4,10 +4,11 @@ class ComponentsController < ApplicationController
   # GET /components
   def index
     if params[:ship_id]
-      @components = Component.where ship_id: params[:ship_id]
+      @components = Ship.find(params[:ship_id]).components
     else
       @components = Component.all
     end
+    # json_response(params)
     json_response(@components)
   end
 

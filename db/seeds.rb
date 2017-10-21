@@ -20,6 +20,9 @@ ships = Ship.create(
     ]
 )
 
-Component.create(name: 'Cockpit', affect: 'piloting', ship: ships.first)
-Component.create(name: 'Cockpit', affect: 'piloting', ship: ships.last)
-Component.create(name: 'Medbay', affect: 'healing', ship: ships.last)
+cockpit = Component.create(name: 'Cockpit', affect: 'piloting')
+medbay  = Component.create(name: 'Medbay', affect: 'healing')
+
+ships.first.components << cockpit
+ships.first.components << medbay
+ships.last.components << cockpit

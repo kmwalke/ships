@@ -10,15 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171021022250) do
+ActiveRecord::Schema.define(version: 20171021034931) do
 
   create_table "components", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "affect"
-    t.bigint "ship_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["ship_id"], name: "index_components_on_ship_id"
+  end
+
+  create_table "components_ships", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "ship_id", null: false
+    t.bigint "component_id", null: false
+    t.index ["component_id", "ship_id"], name: "index_components_ships_on_component_id_and_ship_id"
+    t.index ["ship_id", "component_id"], name: "index_components_ships_on_ship_id_and_component_id"
   end
 
   create_table "ships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -28,5 +33,4 @@ ActiveRecord::Schema.define(version: 20171021022250) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "components", "ships"
 end
