@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171021034931) do
+ActiveRecord::Schema.define(version: 20171021043220) do
+
+  create_table "commodities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+  end
+
+  create_table "commodities_planets", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "planet_id", null: false
+    t.bigint "commodity_id", null: false
+    t.integer "desired_price"
+    t.index ["commodity_id", "planet_id"], name: "index_commodities_planets_on_commodity_id_and_planet_id"
+    t.index ["planet_id", "commodity_id"], name: "index_commodities_planets_on_planet_id_and_commodity_id"
+  end
+
+  create_table "commodities_ships", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "ship_id", null: false
+    t.bigint "commodity_id", null: false
+    t.index ["commodity_id", "ship_id"], name: "index_commodities_ships_on_commodity_id_and_ship_id"
+    t.index ["ship_id", "commodity_id"], name: "index_commodities_ships_on_ship_id_and_commodity_id"
+  end
 
   create_table "components", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -26,11 +45,18 @@ ActiveRecord::Schema.define(version: 20171021034931) do
     t.index ["ship_id", "component_id"], name: "index_components_ships_on_ship_id_and_component_id"
   end
 
+  create_table "planets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+  end
+
   create_table "ships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "color"
+    t.bigint "planet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["planet_id"], name: "index_ships_on_planet_id"
   end
 
+  add_foreign_key "ships", "planets"
 end
