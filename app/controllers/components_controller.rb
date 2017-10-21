@@ -3,7 +3,11 @@ class ComponentsController < ApplicationController
 
   # GET /components
   def index
-    @components = Component.all
+    if params[:ship_id]
+      @components = Component.where ship_id: params[:ship_id]
+    else
+      @components = Component.all
+    end
     json_response(@components)
   end
 

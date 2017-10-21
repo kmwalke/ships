@@ -5,3 +5,21 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+ships = Ship.create(
+    [
+        {
+            name:  'Falcon',
+            color: 'Grey'
+        },
+        {
+            name:  'Heart of gold',
+            color: 'many'
+        }
+    ]
+)
+
+Component.create(name: 'Cockpit', affect: 'piloting', ship: ships.first)
+Component.create(name: 'Cockpit', affect: 'piloting', ship: ships.last)
+Component.create(name: 'Medbay', affect: 'healing', ship: ships.last)
